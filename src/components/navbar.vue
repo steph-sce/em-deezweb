@@ -1,5 +1,12 @@
 <template>
-  <b-navbar toggleable="md" type="dark" variant="info">
+<div>
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <!-- navbar items, navbar burger... -->
+    </div>
+  </nav>
+</div>
+  <!-- <b-navbar toggleable="md" type="dark" variant="info">
 
   <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
@@ -15,9 +22,7 @@
     <router-link :to="{name:'track'}" class="title">Track</router-link>
     </b-navbar-nav>
   </b-collapse>
-</b-navbar>
-
-<!-- navbar-1.vue -->
+</b-navbar> -->
 </template>
 <script>
 export default {};
