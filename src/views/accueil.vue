@@ -18,7 +18,7 @@ export default {
   data: function() {
     return {
       searchDeezer: "",
-      results: []
+      results: {},
     };
   },
   methods: {

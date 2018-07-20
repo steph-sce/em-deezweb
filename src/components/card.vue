@@ -18,7 +18,7 @@
 </div>
 </template>
 <script>
-import axios from "axios";
+import Album from "./album";
 
 export default {
   data: function() {
@@ -31,20 +31,12 @@ export default {
   },
   methods: {
     getAlbum(id) {
-      axios
-        .get(
-          `https://cors-anywhere.herokuapp.com/https://api.deezer.com/album/${id}&output=json`
-        )
-        .then(response => {
-          this.albumResults = response.data;
-          console.log(response.data);
-
-          if (JSON.parse(response.status) == "200") {
-            this.$router.push("/album");
-            console.log(response.data);
-          }
-        });
-      console.log("YOLO", id);
+      this.$router.push({
+        path: "/album",
+        name: "album",
+        component: Album,
+        params: { id: `${id}` }
+      });
     }
   }
 };
