@@ -1,36 +1,51 @@
 <template>
-<div class="card">
-  <div class="card-image">
-    <figure class="image is-4by3">
-      <img :img-src= "result.album.cover_xl" alt="Placeholder image">
-    </figure>
-  </div>
-  <div class="card-content">
-    <div class="media">
-      <div class="media-left">
-        <figure class="image is-48x48">
-          <img :img-src= "result.album.cover_xl" alt="Placeholder image">
-        </figure>
-      </div>
-      <div class="media-content">
-        <p class="title is-4">{{ result.artist.name }}</p>
-        <p class="subtitle is-6">{{ result.title }}</p>
-      </div>
-    </div>
-
-    <div class="content">
-      {{ result.album.title }}. <a>@bulmaio</a>.
-      <a href="#">#css</a> <a href="#">#responsive</a>
-      <br>
-      <time datetime="2016-1-1">{{ result.duration }}</time>
-    </div>
-  </div>
+<div>
+  <b-card :title= "result.title"
+          :img-src= "result.album.cover_xl"
+          img-alt="Image"
+          img-top
+          tag="article"
+          style="max-width: 20rem;"
+          class="mb-2">
+    <p class="card-text">{{ result.artist.name }}</p>
+    <p class="card-text">{{ result.album.title }}</p>
+    <p class="card-text">{{ result.duration }}</p>
+    <p class="card-text">{{ result.album.id }}</p>
+    <b-button variant="light">play</b-button>
+    <b-button variant="light" @click="getAlbum(result.album.id)">album</b-button>
+    <b-button variant="light">artiste</b-button>
+  </b-card>
 </div>
 </template>
 <script>
+import axios from "axios";
+
 export default {
+  data: function() {
+    return {
+      albumResults: {}
+    };
+  },
   props: {
     result: Object
+  },
+  methods: {
+    getAlbum(id) {
+      axios
+        .get(
+          `https://cors-anywhere.herokuapp.com/https://api.deezer.com/album/${id}&output=json`
+        )
+        .then(response => {
+          this.albumResults = response.data;
+          console.log(response.data);
+
+          if (JSON.parse(response.status) == "200") {
+            this.$router.push("/album");
+            console.log(response.data);
+          }
+        });
+      console.log("YOLO", id);
+    }
   }
 };
 </script>

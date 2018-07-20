@@ -1,10 +1,13 @@
 <template>
-  <div id="app">
-    <h1>Accueil</h1>
+<div>
+  <div>
     <input type="text" v-model="searchDeezer">
-    <button @click="search(searchDeezer)">Recherche</button>    
-    <Card v-for="result in results" :key="result.id" :result="result"></Card>
+    <b-button variant="light" @click="search(searchDeezer)">Recherche</b-button>          
   </div>
+  <div>
+    <Card v-for="result in results" :key="result.id" :result="result"></Card> 
+  </div>
+</div>
 </template>
 
 <script>
@@ -26,19 +29,15 @@ export default {
         )
         .then(response => {
           this.results = response.data.data;
+          console.log(response.data.data);
         });
     }
   },
   components: {
-    Card
+    Card,
   }
 };
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css?family=Montserrat");
-
-#app {
-  font-family: "Montserrat", sans-serif;
-}
 </style>

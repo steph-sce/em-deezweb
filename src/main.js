@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router/index'
-import './../node_modules/bulma/css/bulma.css';
 
-require('./assets/normalize.css')
-require('./assets/reset.css')
+import BootstrapVue from 'bootstrap-vue'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+Vue.use(BootstrapVue);
 Vue.use(router);
 
 Vue.config.productionTip = false
