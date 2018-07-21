@@ -25,11 +25,11 @@ export default {
     search: function(searchDeezer) {
       axios
         .get(
-          `https://cors-anywhere.herokuapp.com/https://api.deezer.com/search?q=artist:"${searchDeezer}"&output=json`
+          //`https://cors-anywhere.herokuapp.com/https://api.deezer.com/search?q=artist:"${searchDeezer}"&output=json`
+          `https://cryptic-headland-94862.herokuapp.com/https://api.deezer.com/search?q=artist:"${searchDeezer}"&output=json`
         )
         .then(response => {
           this.results = response.data.data;
-          console.log(response.data.data);
         });
     }
   },

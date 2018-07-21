@@ -6,7 +6,6 @@
     <b-collapse is-nav id="nav_collapse">
       <b-navbar-nav>
         <b-nav-item :to="{name: 'accueil'}">Recherche</b-nav-item>
-        <b-nav-item href="#">Mes favoris</b-nav-item>
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
