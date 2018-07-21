@@ -1,17 +1,26 @@
 <template>
 <div>
-  <p>Titre : {{titleResults.title}}</p>
-  <img :src="titleResults.album.cover_big" alt="" srcset="">
-  <p>Titre : {{titleResults.album.title}}</p>
-  <img :src="titleResults.artist.picture_big" alt="" srcset="">
+  <p>Titre chanson: {{titleResults.title}}</p>
+  <img :src="titleResults.album.cover" alt="Photo album.">
+  <p>Titre album: {{titleResults.album.title}}</p>
+  <img :src="titleResults.artist.picture" alt="Photo artiste.">
   <p>Titre : {{titleResults.artist.name}}</p>
   <p>Durée : {{titleResults.duration}}</p>
   <p>Date de parution : {{titleResults.release_date}}</p>
   <b-button :href="titleResults.link" target="blank">Voir le titre sur Deezer</b-button>
+  <a-player
+    :music="{
+      title: this.titleResults.title,
+      artist: this.titleResults.artist.name,
+      src: this.titleResults.preview,
+      pic: this.titleResults.album.cover
+    }"
+  />
   </div>
 </template>
 <script>
 import axios from "axios";
+import VueAplayer from "vue-aplayer";
 
 export default {
   data: function() {
@@ -29,9 +38,10 @@ export default {
       )
       .then(response => {
         this.titleResults = response.data;
-        console.log(response.data);
+        console.log(response.data.album);
       });
-  }
+  },
+  components: { "a-player": VueAplayer }
 };
 </script>
 <style>

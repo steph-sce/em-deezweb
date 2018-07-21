@@ -9,8 +9,6 @@
           class="mb-2">
     <p class="card-text">{{ result.artist.name }}</p>
     <p class="card-text">{{ result.album.title }}</p>
-    <p class="card-text">{{ result.duration }}</p>
-    <p class="card-text">{{ result.album.id }}</p>
     <b-button variant="light" >play</b-button>
     <b-button variant="light" @click="getAlbum(result.album.id)">album</b-button>
     <b-button variant="light" @click="getArtist(result.artist.id)">artiste</b-button>
