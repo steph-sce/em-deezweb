@@ -51,12 +51,22 @@ export default {
 
     axios
       .get(
-        //`https://cors-anywhere.herokuapp.com/https://api.deezer.com/artist/${id}&output=json`
-        `https://cryptic-headland-94862.herokuapp.com/https://api.deezer.com/track/${id}/&output=json`
+        `https://cors-anywhere.herokuapp.com/https://api.deezer.com/track/${id}&output=json`
       )
       .then(response => {
-        this.titleResults = response.data;
-        this.loader = false;
+        if (response.status === 200) {
+          this.titleResults = response.data;
+          this.loader = false;
+        } else {
+          axios
+            .get(
+              `https://cryptic-headland-94862.herokuapp.com/https://api.deezer.com/track/${id}/&output=json`
+            )
+            .then(response => {
+              this.titleResults = response.data;
+              this.loader = false;
+            });
+        }
       });
   },
   methods: {

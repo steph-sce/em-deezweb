@@ -42,19 +42,44 @@ export default {
     axios
       .all([
         axios.get(
-          `https://cryptic-headland-94862.herokuapp.com/https://api.deezer.com/album/${id}&output=json`
+          // `https://cryptic-headland-94862.herokuapp.com/https://api.deezer.com/album/${id}&output=json`
+          `https://cors-anywhere.herokuapp.com/https://api.deezer.com/album/${id}&output=json`
         ),
         axios.get(
-          `https://cryptic-headland-94862.herokuapp.com/https://api.deezer.com/album/${id}/tracks&output=json`
+          // `https://cryptic-headland-94862.herokuapp.com/https://api.deezer.com/album/${id}/tracks&output=json`
+          `https://cors-anywhere.herokuapp.com/https://api.deezer.com/album/${id}/tracks&output=json`
         )
       ])
-      .then(
-        axios.spread(function(album, track) {
-          that.albumResults = album.data;
-          that.trackResults = track.data.data;
-          that.loader = false;
-        })
-      )
+      .then(response => {
+        if (response.status === 200) {
+          console.log("response1", response);
+
+          axios.spread(function(album, track) {
+            that.albumResults = album.data;
+            that.trackResults = track.data.data;
+            that.loader = false;
+          })
+        } else {
+          console.log("response2", response);
+
+          axios
+            .all([
+              axios.get(
+                `https://cryptic-headland-94862.herokuapp.com/https://api.deezer.com/album/${id}&output=json`
+              ),
+              axios.get(
+                `https://cryptic-headland-94862.herokuapp.com/https://api.deezer.com/album/${id}/tracks&output=json`
+              )
+            ])
+            .then( response => {
+              axios.spread(function(album, track) {
+                that.albumResults = album.data;
+                that.trackResults = track.data.data;
+                that.loader = false;
+              })
+            });
+        }
+      })
       .catch(error => console.log(error));
   },
   methods: {
@@ -95,7 +120,8 @@ ul li {
   list-style: none;
 }
 
-.artist_album:hover, ul li:hover {
+.artist_album:hover,
+ul li:hover {
   color: blue;
 }
 </style>

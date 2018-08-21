@@ -12,11 +12,11 @@
   <div class="result_card container">
     <Card v-for="result in results" :key="result.id" :result="result"></Card> 
   </div>
-  <div>
+  <!-- <div>
     <b-modal v-model="modalShow">
       Erreur
     </b-modal>
-  </div>
+  </div> -->
   <div v-if="loader" class="loader">
     <img src="../assets/img/loader.gif" alt="Loader de chargement.">
   </div>
@@ -40,8 +40,8 @@ export default {
         { text: "Les plus populaires", value: "RATING_ASC" },
         { text: "Les mieux notés", value: "RANKING" }
       ],
-      results: {},
-      modalShow: false
+      results: {}
+      // modalShow: false
     };
   },
   methods: {
@@ -50,12 +50,22 @@ export default {
       //TODO: afficher message d'erreur si pas de résultat.
       axios
         .get(
-          //`https://cors-anywhere.herokuapp.com/https://api.deezer.com/search?q=artist:"${searchDeezer}"&output=json`
-          `https://cryptic-headland-94862.herokuapp.com/https://api.deezer.com/search?q="${searchDeezer}"&order=${selected}&output=json`
+          `https://cors-anywhere.herokuapp.com/https://api.deezer.com/search?q=artist:"${searchDeezer}"&order=${selected}&output=json`
         )
         .then(response => {
-          this.results = response.data.data;
-          this.loader = false;
+          if (response.status === 200) {
+            this.results = response.data.data;
+            this.loader = false;
+          } else {
+            axios
+              .get(
+                `https://cryptic-headland-94862.herokuapp.com/https://api.deezer.com/search?q="${searchDeezer}"&order=${selected}&output=json`
+              )
+              .then(response => {
+                this.results = response.data.data;
+                this.loader = false;
+              });
+          }
         });
     }
   },
