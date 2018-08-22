@@ -37,50 +37,28 @@ export default {
   },
   created() {
     let id = this.$route.params.id;
-    const that = this; //la portée de this n'est pas correcte axios.spread
 
     axios
-      .all([
-        axios.get(
-          // `https://cryptic-headland-94862.herokuapp.com/https://api.deezer.com/album/${id}&output=json`
-          `https://cors-anywhere.herokuapp.com/https://api.deezer.com/album/${id}&output=json`
-        ),
-        axios.get(
-          // `https://cryptic-headland-94862.herokuapp.com/https://api.deezer.com/album/${id}/tracks&output=json`
-          `https://cors-anywhere.herokuapp.com/https://api.deezer.com/album/${id}/tracks&output=json`
-        )
-      ])
+      .get(
+        `https://cors-anywhere.herokuapp.com/https://api.deezer.com/album/${id}&output=json`
+      )
       .then(response => {
         if (response.status === 200) {
-          console.log("response1", response);
-
-          axios.spread(function(album, track) {
-            that.albumResults = album.data;
-            that.trackResults = track.data.data;
-            that.loader = false;
-          })
+          this.albumResults = response.data;
+          this.trackResults = response.data.tracks.data;
+          this.loader = false;
         } else {
-          console.log("response2", response);
-
           axios
-            .all([
-              axios.get(
-                `https://cryptic-headland-94862.herokuapp.com/https://api.deezer.com/album/${id}&output=json`
-              ),
-              axios.get(
-                `https://cryptic-headland-94862.herokuapp.com/https://api.deezer.com/album/${id}/tracks&output=json`
-              )
-            ])
-            .then( response => {
-              axios.spread(function(album, track) {
-                that.albumResults = album.data;
-                that.trackResults = track.data.data;
-                that.loader = false;
-              })
+            .get(
+              `https://cryptic-headland-94862.herokuapp.com/https://api.deezer.com/album/${id}&output=json`
+            )
+            .then(response => {
+              this.albumResults = response.data;
+              this.trackResults = response.data.tracks.data;
+              this.loader = false;
             });
         }
-      })
-      .catch(error => console.log(error));
+      });
   },
   methods: {
     getTrack(id) {
