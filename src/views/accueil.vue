@@ -50,7 +50,7 @@ export default {
       //TODO: afficher message d'erreur si pas de résultat.
       axios
         .get(
-          `https://cors-anywhere.herokuapp.com/https://api.deezer.com/search?q="${searchDeezer}"&order=${selected}&output=json`
+          `https://cors-anywhere.herokuapp.com/https://api.deezer.com/search?q=${searchDeezer}&order=${selected}&output=json`
         )
         .then(response => {
           if (response.status === 200) {

@@ -9,7 +9,7 @@
     </div>
     <div>
       <h5 class="mt-0">{{artistResults.name}}</h5>
-      <p>Nombre de d'albums : {{artistResults.nb_album}}</p>
+      <p>Nombre d'albums : {{artistResults.nb_album}}</p>
       <p>Nombre de fans : {{artistResults.nb_fan}}</p>
       <b-button :href="artistResults.link" target="blank">Voir l'artiste sur Deezer</b-button>
     </div>
