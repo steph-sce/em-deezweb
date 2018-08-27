@@ -31,11 +31,11 @@ export default {
   data: function() {
     return {
       searchDeezer: "",
-      selected: "ALBUM_ASC",
+      selected: "ARTIST_ASC",
       loader: false,
       options: [
-        { text: "Album", value: "ALBUM_ASC" },
         { text: "Artiste", value: "ARTIST_ASC" },
+        { text: "Album", value: "ALBUM_ASC" },        
         { text: "Musique", value: "TRACK_ASC" },
         { text: "Les plus populaires", value: "RATING_ASC" },
         { text: "Les mieux notés", value: "RANKING" }
@@ -46,11 +46,13 @@ export default {
   },
   methods: {
     search: function(searchDeezer, selected) {
+      console.log('SELECTED => ', selected);
+      console.log('searchDeezer => ', searchDeezer);
       this.loader = true;
       //TODO: afficher message d'erreur si pas de résultat.
       axios
         .get(
-          `https://cors-anywhere.herokuapp.com/https://api.deezer.com/search?q=${searchDeezer}&order=${selected}&output=json`
+          `https://cors-anywhere.herokuapp.com/https://api.deezer.com/search?q=${searchDeezer}&order=${this.selected}&output=json`
         )
         .then(response => {
           if (response.status === 200) {
@@ -59,7 +61,7 @@ export default {
           } else {
             axios
               .get(
-                `https://cryptic-headland-94862.herokuapp.com/https://api.deezer.com/search?q="${searchDeezer}"&order=${selected}&output=json`
+                `https://cryptic-headland-94862.herokuapp.com/https://api.deezer.com/search?q=${searchDeezer}&order=${this.selected}&output=json`
               )
               .then(response => {
                 this.results = response.data.data;
