@@ -20,6 +20,13 @@
   <div v-if="loader" class="loader">
     <img src="../assets/img/loader.gif" alt="Loader de chargement.">
   </div>
+
+  <!-- Modal Erreur de recherche-->
+  <div>
+    <b-modal v-model="modalShow" ok-only>
+      Aucun élément trouvé.
+    </b-modal>
+  </div>
 </div>
 </template>
 
@@ -30,12 +37,13 @@ export default {
   name: "app",
   data: function() {
     return {
+      modalShow: false,
       searchDeezer: "",
       selected: "ARTIST_ASC",
       loader: false,
       options: [
         { text: "Artiste", value: "ARTIST_ASC" },
-        { text: "Album", value: "ALBUM_ASC" },        
+        { text: "Album", value: "ALBUM_ASC" },
         { text: "Musique", value: "TRACK_ASC" },
         { text: "Les plus populaires", value: "RATING_ASC" },
         { text: "Les mieux notés", value: "RANKING" }
@@ -46,28 +54,45 @@ export default {
   },
   methods: {
     search: function(searchDeezer, selected) {
-      console.log('SELECTED => ', selected);
-      console.log('searchDeezer => ', searchDeezer);
+      console.log("SELECTED => ", this.selected);
+      console.log("searchDeezer => ", searchDeezer);
       this.loader = true;
       //TODO: afficher message d'erreur si pas de résultat.
       axios
         .get(
-          `https://cors-anywhere.herokuapp.com/https://api.deezer.com/search?q=${searchDeezer}&order=${this.selected}&output=json`
+          `https://cors-anywhere.herokuapp.com/https://api.deezer.com/search?q=${searchDeezer}&order=${
+            this.selected
+          }&output=json`
         )
         .then(response => {
           if (response.status === 200) {
+            console.log("DATA ACCUEIL => ", response.data);
+            if (response.data.total === 0) {
+              this.modalShow = true;
+            }
             this.results = response.data.data;
             this.loader = false;
           } else {
             axios
               .get(
-                `https://cryptic-headland-94862.herokuapp.com/https://api.deezer.com/search?q=${searchDeezer}&order=${this.selected}&output=json`
+                `https://cryptic-headland-94862.herokuapp.com/https://api.deezer.com/search?q=${searchDeezer}&order=${
+                  this.selected
+                }&output=json`
               )
               .then(response => {
+                if (response.data.total === 0) {
+                  this.modalShow = true;
+                }
                 this.results = response.data.data;
                 this.loader = false;
+              })
+              .catch(error => {
+                console.log(error);
               });
           }
+        })
+        .catch(error => {
+          console.log(error);
         });
     }
   },
