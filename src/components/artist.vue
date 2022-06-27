@@ -1,29 +1,35 @@
 <template>
-<div>
-  <div v-if="loader" class="loader">
-    <img src="../assets/img/loader.gif" alt="Loader de chargement.">
-  </div>
-  <div class="artist" v-else>
-    <div>
-      <img slot="aside" :src= "artistResults.picture_big"  alt="Photo artiste." />
+  <div>
+    <div v-if="loader" class="loader">
+      <img src="../assets/img/loader.gif" alt="Loader de chargement." />
     </div>
-    <div>
-      <h5 class="mt-0">{{artistResults.name}}</h5>
-      <p>Nombre d'albums : {{artistResults.nb_album}}</p>
-      <p>Nombre de fans : {{artistResults.nb_fan}}</p>
-      <b-button :href="artistResults.link" target="blank">Voir l'artiste sur Deezer</b-button>
+    <div class="artist" v-else>
+      <div>
+        <img
+          slot="aside"
+          :src="artistResults.picture_big"
+          alt="Photo artiste."
+        />
+      </div>
+      <div>
+        <h5 class="mt-0">{{ artistResults.name }}</h5>
+        <p>Nombre d'albums : {{ artistResults.nb_album }}</p>
+        <p>Nombre de fans : {{ artistResults.nb_fan }}</p>
+        <b-button :href="artistResults.link" target="blank"
+          >Voir l'artiste sur Deezer</b-button
+        >
+      </div>
     </div>
   </div>
-</div>
 </template>
 <script>
 import axios from "axios";
 
 export default {
-  data: function() {
+  data: function () {
     return {
       artistResults: {},
-      loader: true
+      loader: true,
     };
   },
   beforeMount() {
@@ -32,7 +38,7 @@ export default {
       .get(
         `https://cors-anywhere.herokuapp.com/https://api.deezer.com/artist/${id}&output=json`
       )
-      .then(response => {
+      .then((response) => {
         if (response.status === 200) {
           this.artistResults = response.data;
           this.loader = false;
@@ -41,13 +47,13 @@ export default {
             .get(
               `https://cryptic-headland-94862.herokuapp.com/https://api.deezer.com/artist/${id}/&output=json`
             )
-            .then(response => {
+            .then((response) => {
               this.artistResults = response.data;
               this.loader = false;
             });
         }
       });
-  }
+  },
 };
 </script>
 <style>

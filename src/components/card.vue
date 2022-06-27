@@ -1,17 +1,25 @@
 <template>
-  <b-card :title= "result.title"
-          :img-src= "result.album.cover_xl"
-          img-alt="Image"
-          img-top
-          tag="article"
-          style="max-width: 20rem; margin:20px;"
-          class="mb-2">
+  <b-card
+    :title="result.title"
+    :img-src="result.album.cover_xl"
+    img-alt="Image"
+    img-top
+    tag="article"
+    style="max-width: 20rem; margin: 20px"
+    class="mb-2"
+  >
     <p class="card-text">{{ result.artist.name }}</p>
     <p class="card-text">{{ result.album.title }}</p>
     <div class="card_btn">
-      <b-button variant="light" @click="getTrack(result.id)"><font-awesome-icon icon="play"/></b-button>
-      <b-button variant="light" @click="getAlbum(result.album.id)">album</b-button>
-      <b-button variant="light" @click="getArtist(result.artist.id)">artiste</b-button>
+      <b-button variant="light" @click="getTrack(result.id)"
+        ><font-awesome-icon icon="play"
+      /></b-button>
+      <b-button variant="light" @click="getAlbum(result.album.id)"
+        >album</b-button
+      >
+      <b-button variant="light" @click="getArtist(result.artist.id)"
+        >artiste</b-button
+      >
     </div>
   </b-card>
 </template>
@@ -21,13 +29,13 @@ import Artist from "./artist";
 import Title from "./title";
 
 export default {
-  data: function() {
+  data: function () {
     return {
-      albumResults: {}
+      albumResults: {},
     };
   },
   props: {
-    result: Object
+    result: Object,
   },
   methods: {
     getTrack(id) {
@@ -35,7 +43,7 @@ export default {
         path: "/title",
         name: "title",
         component: Title,
-        params: { id: `${id}` }
+        params: { id: `${id}` },
       });
     },
     getAlbum(id) {
@@ -43,7 +51,7 @@ export default {
         path: "/album",
         name: "album",
         component: Album,
-        params: { id: `${id}` }
+        params: { id: `${id}` },
       });
     },
     getArtist(id) {
@@ -51,10 +59,10 @@ export default {
         path: "/artist",
         name: "artist",
         component: Artist,
-        params: { id: `${id}` }
+        params: { id: `${id}` },
       });
-    }
-  }
+    },
+  },
 };
 </script>
 <style>

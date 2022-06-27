@@ -1,26 +1,28 @@
 <template>
-<div>
-  <div v-if="loader" class="loader">
-    <img src="../assets/img/loader.gif" alt="Loader de chargement.">
-  </div>
-  <div v-else class="album">
-    <div>
-      <img :src="albumResults.cover_big" alt="Photo de l'album">
+  <div>
+    <div v-if="loader" class="loader">
+      <img src="../assets/img/loader.gif" alt="Loader de chargement." />
     </div>
-    <div>
-      <h5>Titre de l'album : {{albumResults.title}}</h5>
-      <p class="artist_album" @click="getArtist(albumResults.artist.id)">Artiste : {{albumResults.artist.name}}</p>
-      <p>
-        {{albumResults.nb_tracks}} titres -
-        {{albumResults.fans}} fans 
-      </p>
-      <ul v-for="trackResult in trackResults" :key="trackResult.id">
-        <li @click="getTrack(trackResult.id)"><font-awesome-icon icon="music"/> {{trackResult.title}} </li>
-      </ul>
+    <div v-else class="album">
+      <div>
+        <img :src="albumResults.cover_big" alt="Photo de l'album" />
+      </div>
+      <div>
+        <h5>Titre de l'album : {{ albumResults.title }}</h5>
+        <p class="artist_album" @click="getArtist(albumResults.artist.id)">
+          Artiste : {{ albumResults.artist.name }}
+        </p>
+        <p>
+          {{ albumResults.nb_tracks }} titres - {{ albumResults.fans }} fans
+        </p>
+        <ul v-for="trackResult in trackResults" :key="trackResult.id">
+          <li @click="getTrack(trackResult.id)">
+            <font-awesome-icon icon="music" /> {{ trackResult.title }}
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
-</div>
-
 </template>
 <script>
 import axios from "axios";
@@ -28,11 +30,11 @@ import Title from "./title";
 import Artist from "./artist";
 
 export default {
-  data: function() {
+  data: function () {
     return {
       albumResults: {},
       trackResults: {},
-      loader: true
+      loader: true,
     };
   },
   created() {
@@ -42,7 +44,7 @@ export default {
       .get(
         `https://cors-anywhere.herokuapp.com/https://api.deezer.com/album/${id}&output=json`
       )
-      .then(response => {
+      .then((response) => {
         if (response.status === 200) {
           this.albumResults = response.data;
           this.trackResults = response.data.tracks.data;
@@ -52,7 +54,7 @@ export default {
             .get(
               `https://cryptic-headland-94862.herokuapp.com/https://api.deezer.com/album/${id}&output=json`
             )
-            .then(response => {
+            .then((response) => {
               this.albumResults = response.data;
               this.trackResults = response.data.tracks.data;
               this.loader = false;
@@ -66,7 +68,7 @@ export default {
         path: "/title",
         name: "title",
         component: Title,
-        params: { id: `${id}` }
+        params: { id: `${id}` },
       });
     },
     getArtist(id) {
@@ -74,10 +76,10 @@ export default {
         path: "/artist",
         name: "artist",
         component: Artist,
-        params: { id: `${id}` }
+        params: { id: `${id}` },
       });
-    }
-  }
+    },
+  },
 };
 </script>
 <style>
