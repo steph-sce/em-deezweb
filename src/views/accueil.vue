@@ -31,7 +31,7 @@
       <img src="../assets/img/loader.gif" alt="Loader de chargement." />
     </div>
 
-    <!-- Modal Erreur de recherche-->.6.10
+    <!-- Modal Erreur de recherche-->
     <div>
       <b-modal v-model="modalShow" ok-only> Aucun élément trouvé. </b-modal>
     </div>
