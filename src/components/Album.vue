@@ -25,49 +25,24 @@
   </div>
 </template>
 <script>
-import axios from "axios";
-import Title from "./title";
-import Artist from "./artist";
+import {getAlbum} from "../api/apiCalls";
+import Track from "./Track";
+import Artist from "./Artist";
 
 export default {
-  data: function () {
-    return {
-      albumResults: {},
-      trackResults: {},
-      loader: true,
-    };
-  },
-  created() {
-    let id = this.$route.params.id;
-
-    axios
-      .get(
-        `https://cors-anywhere.herokuapp.com/https://api.deezer.com/album/${id}&output=json`
-      )
-      .then((response) => {
-        if (response.status === 200) {
-          this.albumResults = response.data;
-          this.trackResults = response.data.tracks.data;
-          this.loader = false;
-        } else {
-          axios
-            .get(
-              `https://cryptic-headland-94862.herokuapp.com/https://api.deezer.com/album/${id}&output=json`
-            )
-            .then((response) => {
-              this.albumResults = response.data;
-              this.trackResults = response.data.tracks.data;
-              this.loader = false;
-            });
-        }
-      });
-  },
   methods: {
+    async getAlbum(){
+      const albumId = this.$route.params.id;
+      const data = await getAlbum(albumId);
+      this.albumResults = data;
+      this.trackResults = data.tracks.data;
+      this.loader = false;
+    },
     getTrack(id) {
       this.$router.push({
-        path: "/title",
-        name: "title",
-        component: Title,
+        path: "/track",
+        name: "track",
+        component: Track,
         params: { id: `${id}` },
       });
     },
@@ -79,6 +54,16 @@ export default {
         params: { id: `${id}` },
       });
     },
+  },
+  data: function () {
+    return {
+      albumResults: {},
+      trackResults: {},
+      loader: true,
+    };
+  },
+  mounted() {
+    this.getAlbum();
   },
 };
 </script>

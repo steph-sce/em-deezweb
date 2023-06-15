@@ -3,10 +3,10 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-import Accueil from '@/views/accueil'
-import Album from '@/components/album'
-import Artist from '@/components/artist'
-import Title from '@/components/title'
+import Accueil from '@/views/Accueil'
+import Album from '@/components/Album'
+import Artist from '@/components/Artist'
+import Track from '@/components/Track'
 
 export default new Router({
   mode: 'history',
@@ -14,6 +14,6 @@ export default new Router({
     { path: '/accueil', name: 'accueil', component: Accueil },
     { path: '/album/:id', name: 'album', component: Album },
     { path: '/artiste/:id', name: 'artist', component: Artist },
-    { path: '/title/:id', name: 'title', component: Title }
+    { path: '/track/:id', name: 'track', component: Track }
   ]
 })

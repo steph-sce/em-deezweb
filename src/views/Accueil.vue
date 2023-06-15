@@ -6,7 +6,7 @@
         v-model="searchDeezer"
         placeholder="Recherche sur Deezer"
       ></b-form-input>
-      <select v-model="selected">
+      <select v-model="order">
         <option
           v-for="option in options"
           v-bind:value="option.value"
@@ -39,15 +39,15 @@
 </template>
 
 <script>
-import axios from "axios";
-import Card from "../components/card";
+import Card from "../components/Card";
+import {getSearch} from "../api/apiCalls";
 export default {
   name: "app",
   data: function () {
     return {
       modalShow: false,
       searchDeezer: "",
-      selected: "ARTIST_ASC",
+      order: "ARTIST_ASC",
       loader: false,
       options: [
         { text: "Artiste", value: "ARTIST_ASC" },
@@ -60,40 +60,12 @@ export default {
     };
   },
   methods: {
-    search: async function (searchDeezer) {
+    search: async function (search) {
       this.loader = true;
       //TODO: afficher message d'erreur si pas de résultat.
-      await axios
-        .get(
-          `https://cors-anywhere.herokuapp.com/https://api.deezer.com/search?q=${searchDeezer}&order=${this.selected}&output=json`
-        )
-        .then((response) => {
-          if (response.status === 200) {
-            if (response.data.total === 0) {
-              this.modalShow = true;
-            }
-            this.results = response.data.data;
-            this.loader = false;
-          } else {
-            axios
-              .get(
-                `https://cryptic-headland-94862.herokuapp.com/https://api.deezer.com/search?q=${searchDeezer}&order=${this.selected}&output=json`
-              )
-              .then((response) => {
-                if (response.data.total === 0) {
-                  this.modalShow = true;
-                }
-                this.results = response.data.data;
-                this.loader = false;
-              })
-              .catch((error) => {
-                error;
-              });
-          }
-        })
-        .catch((error) => {
-          error;
-        });
+      const data = await getSearch(search, this.order);
+      this.results = data;
+      this.loader = false;
     },
   },
   components: {

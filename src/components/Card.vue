@@ -24,9 +24,9 @@
   </b-card>
 </template>
 <script>
-import Album from "./album";
-import Artist from "./artist";
-import Title from "./title";
+import Album from "./Album";
+import Artist from "./Artist";
+import Track from "./Track";
 
 export default {
   data: function () {
@@ -40,9 +40,9 @@ export default {
   methods: {
     getTrack(id) {
       this.$router.push({
-        path: "/title",
-        name: "title",
-        component: Title,
+        path: "/track",
+        name: "track",
+        component: Track,
         params: { id: `${id}` },
       });
     },

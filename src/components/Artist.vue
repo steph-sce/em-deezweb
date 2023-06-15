@@ -23,36 +23,25 @@
   </div>
 </template>
 <script>
-import axios from "axios";
+import {getArtist} from "../api/apiCalls";
 
 export default {
+  methods: {
+    async getArtist(){
+      let artistId = this.$route.params.id;
+      const data = await getArtist(artistId);
+      this.artistResults = data;
+      this.loader = false;
+    }
+  },
   data: function () {
     return {
       artistResults: {},
       loader: true,
     };
   },
-  beforeMount() {
-    let id = this.$route.params.id;
-    axios
-      .get(
-        `https://cors-anywhere.herokuapp.com/https://api.deezer.com/artist/${id}&output=json`
-      )
-      .then((response) => {
-        if (response.status === 200) {
-          this.artistResults = response.data;
-          this.loader = false;
-        } else {
-          axios
-            .get(
-              `https://cryptic-headland-94862.herokuapp.com/https://api.deezer.com/artist/${id}/&output=json`
-            )
-            .then((response) => {
-              this.artistResults = response.data;
-              this.loader = false;
-            });
-        }
-      });
+  mounted() {
+    this.getArtist();
   },
 };
 </script>
