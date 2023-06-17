@@ -61,6 +61,7 @@ export default {
   },
   methods: {
     search: async function (search) {
+      this.results = {};
       this.loader = true;
       //TODO: afficher message d'erreur si pas de résultat.
       const data = await getSearch(search, this.order);
