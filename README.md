@@ -2,7 +2,7 @@
 
 ## Project setup
 ```
-npm install
+npm i
 ```
 
 ### Compiles and hot-reloads for development
@@ -18,4 +18,9 @@ npm run build
 ### Lints and fixes files
 ```
 npm run lint
+```
+
+### Run with Docker
+```
+docker compose up --build
 ```
