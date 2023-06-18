@@ -24,9 +24,9 @@
   </b-card>
 </template>
 <script>
-import Album from "./Album";
-import Artist from "./Artist";
-import Track from "./Track";
+import Album from "@/views/Track";
+import Artist from "@/views/Track";
+import Track from "@/views/Track";
 
 export default {
   data: function () {

@@ -4,9 +4,9 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 import Accueil from '@/views/Accueil'
-import Album from '@/components/Album'
-import Artist from '@/components/Artist'
-import Track from '@/components/Track'
+import Album from '@/views/Album'
+import Artist from '@/views/Artist'
+import Track from '@/views/Track'
 
 export default new Router({
   mode: 'history',
