@@ -64,7 +64,7 @@ export default {
       this.results = {};
       this.loader = true;
       //TODO: afficher message d'erreur si pas de résultat.
-      const data = await getSearch(search, this.order);
+      const {data} = await getSearch(search, this.order);
       this.results = data;
       this.loader = false;
     },

@@ -9,46 +9,33 @@ const request = axios.create({
   }
 });
 
-export async function getSearch(searchDeezer, order){
+const handleRequest = async (endpoint) => {
   try {
-    const res = await request(`search?q=${searchDeezer}&order=${order}`);
-    const { data: search } = res.data;
-    return search;
+    const {data} = await request(endpoint);
+    return data;
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(error);
+    throw error;
   }
-}
+};
 
-export async function getArtist(artistId){
-  try {
-    const res = await request(`artist/${artistId}`);
-    const { data: artist } = res;
-    return artist;
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error(error);
-  }
-}
+export const getSearch = async (searchDeezer, order) => {
+  const endpoint = `search?q=${searchDeezer}&order=${order}`;
+  return handleRequest(endpoint);
+};
 
-export async function getAlbum(albumId){
-  try {
-    const res = await request(`album/${albumId}`);
-    const { data: album } = res;
-    return album;
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error(error);
-  }
-}
+export const getArtist = async (artistId) => {
+  const endpoint = `artist/${artistId}`;
+  return handleRequest(endpoint);
+};
 
-export async function getTrack(trackId){
-  try {
-    const res = await request(`track/${trackId}`);
-    const { data: track } = res;
-    return track;
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error(error);
-  }
-}
+export const getAlbum = async (albumId) => {
+  const endpoint = `album/${albumId}`;
+  return handleRequest(endpoint);
+};
+
+export const getTrack = async (trackId) => {
+  const endpoint = `track/${trackId}`;
+  return handleRequest(endpoint);
+};
